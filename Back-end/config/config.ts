@@ -4,7 +4,7 @@ dotenv.config();
 const config = {
   development : {
       username : process.env.DB_USERNAME || 'root',
-      password : process.env.DB_PASSWD || '1234',
+      password : process.env.DB_PASSWD || '1111',
       database : process.env.DB_DBNAME || 'test',
       host : process.env.DB_HOST || 'localhost',
       port : 3306,
