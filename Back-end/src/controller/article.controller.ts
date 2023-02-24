@@ -8,6 +8,7 @@ import { File } from "../../models/file";
 import { Image } from "../../models/image";
 import path from "path";
 
+const a = 1;
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
