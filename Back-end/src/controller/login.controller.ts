@@ -38,13 +38,20 @@ router.post("/", async (req, res) => {
       return res.status(400).json();
     }
 
+    console.log(id + ':' + password );
     const isPasswordValid = await bcrypt.compare(password, existUser.dataValues.password);
     
     if (isPasswordValid) {
       console.log("로그인 성공");
-      const token = jwt.sign({userId: existUser.dataValues.id}, secretKey, {expiresIn: '30m'});
-      console.log(token);
-      return res.status(200).json({token});
+
+      try {
+        const token = jwt.sign({ userId: existUser.dataValues.id }, secretKey, { expiresIn: '30m' });
+        console.log(token);
+        return res.status(200).json({ token });
+      } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
     } else {
       console.log("로그인 실패: 비밀번호가 일치하지 않습니다.");
       console.log(existUser.dataValues.password);
