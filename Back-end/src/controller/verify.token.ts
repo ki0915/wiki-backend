@@ -1,7 +1,6 @@
 import jwt, { VerifyErrors, VerifyOptions } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
-
 const secretKey = 'my-secret-key';
 
 
@@ -19,7 +18,6 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     const decoded = jwt.verify(token, secretKey as string) as object;
     console.log(decoded);
     req.user = decoded;
-    const user = decoded;
     console.log("유저 확인");
     next();
   } catch (err) {

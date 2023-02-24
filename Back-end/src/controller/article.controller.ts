@@ -204,7 +204,7 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
 
   router.post("/delete", authMiddleware, async (req, res) => {
     const { title } = req.body;
-    const user = req.user.userId;
+    const user = req.body.userId;
 
     if (!title || !user) {
       return res.status(400).json();
