@@ -178,7 +178,7 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
 
 
   router.post("/update", authMiddleware, async (req, res) => {
-    const { title, article1, article2, article3, article4, article5, article6 } = req.body;
+    const { title, article1, article2, article3, article4, article5, article6 } = req.body.form;
     
     if (!title) {
       return res.status(400).json();

@@ -24,10 +24,11 @@ export const initializeWebsocket = (server: Server) => {
 
     websocket =io.of("/chats");
     websocket.on("connect", (socket: Socket) => {
-        console.log("연결되었습니다.")
         socket.on(ChatListenEvent.JOIN_ROOM, ({chatTitle}) => {
-            socket.join(`chats-$(chatTitle)`);
+            console.log(chatTitle);
+            socket.join(`chats-${chatTitle}`);
         });
+        console.log("연결.")
 
         socket.on(ChatListenEvent.SEND_MESSAGE, receiveMessage);
 

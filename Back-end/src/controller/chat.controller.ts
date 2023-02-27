@@ -9,7 +9,6 @@ router.use(authMiddleware);
 
 router.post("/view", async(req, res) => {
     const { roomTitle } = req.body;
-    console.log(roomTitle);
     
     if(!roomTitle){
         return res.status(400).json(1);
@@ -33,7 +32,6 @@ router.post("/view", async(req, res) => {
         }
     });
 
-    console.log(chatList);
     return res.status(200).json(chatList);
 })
 

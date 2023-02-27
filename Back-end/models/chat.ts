@@ -40,8 +40,15 @@ Chat.init({
         type: DataTypes.TEXT,
         allowNull: false,
     }
-}, {modelName : 'Chat',
+}, 
+
+
+
+    {modelName : 'Chat',
     tableName : 'Chat',
     sequelize,
     freezeTableName : true,
-    })
+    });
+
+
+

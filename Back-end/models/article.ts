@@ -60,7 +60,7 @@ Article.init({
     },
 
     article6: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
     },
     onetitle: {

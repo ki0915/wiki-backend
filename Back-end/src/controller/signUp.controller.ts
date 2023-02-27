@@ -8,13 +8,6 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   const { id, password } = req.body;
 
-  const existUser = await User.findOne({
-    where: {
-      id: id,
-      password: password,
-    },
-  });
-
   if(id.length > 80 || password.length > 80)
   {
       return res.status(400).json({
@@ -22,8 +15,22 @@ router.post("/", async (req, res) => {
       });
   }
 
+   if( await User.findOne({ where: { id: id}}))
+   {
+    return res.status(400).json();
+   }
+
+  const existUser = await User.findOne({
+    where: {
+      id: id,
+      password: password,
+    },
+  });
+
+
 
   if (existUser) {
+    console.log("이미 있는 사용자입니다!");
     return res.status(404).json();
   }
 
