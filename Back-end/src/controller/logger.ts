@@ -12,6 +12,8 @@ const logger = winston.createLogger({
       filename: 'logs/server.log',
     }),
   ],
+  
 });
+
 
 export default logger;

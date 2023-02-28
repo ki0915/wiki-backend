@@ -42,8 +42,4 @@ router.post("/view", async(req, res) => {
 
 
 
-
-
-
-
 export default router;
