@@ -14,14 +14,14 @@ router.post("/view", async(req, res) => {
         return res.status(400).json(1);
     }
 
+
+    try{
    
     const chats = await Chat.findAll({
         where: {
             roomTitle,
         }
     });
-
-    
 
 
     const chatList = chats.map((chat) => {
@@ -33,6 +33,10 @@ router.post("/view", async(req, res) => {
     });
 
     return res.status(200).json(chatList);
+} catch(err){
+    return res.status(404).json();
+}
+
 })
 
 

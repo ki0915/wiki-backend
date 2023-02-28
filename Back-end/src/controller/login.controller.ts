@@ -2,6 +2,7 @@ import express, { request, response } from "express";
 import { User } from "../../models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { channel } from "diagnostics_channel";
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.post("/", async (req, res) => {
         });
     }
 
-    const existUser = await User.findOne({
+        const existUser = await User.findOne({
         where: {
           id: id,
         },

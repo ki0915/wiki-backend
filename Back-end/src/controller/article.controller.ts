@@ -38,6 +38,8 @@ router.post("/", authMiddleware, async (req, res) => {
     if (!title) {
       return res.status(400).json();
     }
+
+    try{
   
     const article = await Article.findOne({
         where: {
@@ -77,6 +79,10 @@ router.post("/", authMiddleware, async (req, res) => {
     
     
     return res.status(200).json({article, filePath, imagePath});
+
+  } catch(err){
+      return res.status(400).json();
+  }
   });
 
 
@@ -131,7 +137,7 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
   
     else {
       
-      console.log(fileArray[0]);
+      try{
       
     const newArticle = await Article.create({
       title,
@@ -163,14 +169,23 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
     });
   
       return res.status(201).json();
+  } catch(err){
+    return  res.status(400).json();
+  }
   }
   });
 
 
   router.get("/", async (req, res) => {
+
+    try{
     const articleList = await Article.findAll();
 
     return res.status(200).json(articleList); 
+    } catch(err)
+    {
+      return res.status(404).json();
+    }
   
     
 
@@ -211,6 +226,7 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
     }
   
   
+    try{
     const existArticle = await Article.findOne({
       where: {
         title: title
@@ -231,6 +247,9 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
   
     else {
     return res.status(404).json();
+  }}
+  catch(err){
+    return res.status(400).json();
   }
   });
 

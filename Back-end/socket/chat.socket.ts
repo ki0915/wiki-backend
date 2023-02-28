@@ -12,6 +12,8 @@ type ReceiveMessageType = {
 
 export const receiveMessage = async (received: ReceiveMessageType) => {
     const { roomTitle, senderId, message } = received;
+
+    try{
     const newMessage = await Chat.create({
         roomTitle,
         senderId,
@@ -22,5 +24,8 @@ export const receiveMessage = async (received: ReceiveMessageType) => {
 
     console.log(roomTitle + "로 메시지를 보냅니다.");
     namespace.to(`chats-${roomTitle}`).emit("receiveMessage", { roomTitle, senderId,  message });
+} catch(err){
+    console.log("싫패");
+}
 };
 

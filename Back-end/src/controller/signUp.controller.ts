@@ -39,13 +39,18 @@ router.post("/", async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     console.log("접속 하였습니다.");
-    const newUser = await User.create({
-    id,
-    password: hashedPassword,
-    authority: 1
-  });
-
-  return res.status(201).json(newUser);
+    
+    try{
+      const newUser = await User.create({
+        id,
+        password: hashedPassword,
+        authority: 1
+      });
+    
+      return res.status(201).json(newUser);
+    } catch(err){
+      return res.status(404).json();
+    }
 }
 });
 
