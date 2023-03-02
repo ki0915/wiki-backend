@@ -7,6 +7,7 @@ import { Request } from 'express';
 import { File } from "../../models/file"; 
 import { Image } from "../../models/image";
 import path from "path";
+import winston from "winston";
 
 const a = 1;
 
@@ -19,6 +20,13 @@ const storage = multer.diskStorage({
   }
 });
 
+const logger = winston.createLogger({
+  level: 'info',  // 저장할 로그 레벨 설정
+  format: winston.format.json(),  // 로그 형식 설정
+  transports: [
+    new winston.transports.File({ filename: './logs/article.log' })  // 파일 저장 위치와 파일명 설정
+  ]
+});
 
 const upload = multer({ storage: storage });
 
@@ -81,6 +89,7 @@ router.post("/", authMiddleware, async (req, res) => {
     return res.status(200).json({article, filePath, imagePath});
 
   } catch(err){
+      logger.error("게시물이 없거나 파일을 찾는 과정에서 오류가 발생하였습니다.");
       return res.status(400).json();
   }
   });
@@ -112,7 +121,6 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
   if (!files || !imageArray) {
     console.log('No files uploaded');
     return res.status(400).json();
-    
   }
       // 명시적인 타입 캐스팅
 
@@ -167,9 +175,13 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
       path: imageArray[0].path,
       imageName: imageArray[0].filename
     });
+
+      logger.info(`${title} 항목의 글이 추가되었습니다.`);
   
       return res.status(201).json();
   } catch(err){
+
+    logger.error(`${title} 항목의 글이 추가하는데 실패하였습니다.`);
     return  res.status(400).json();
   }
   }
@@ -207,11 +219,18 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
     });
   
     if (existArticle) {
+
+        try{
         Article.update({article1: article1, article2: article2,article3: article3, article4: article4, article5: article5, article6: article6 }, { where: {title: title}});
+        logger.info(`${title} 게시글을 수정하는 데에 성공하였습니다.`);
         return res.status(202).json();
+        }catch(err){
+          logger.info(`${title} 게시글을 수정하는 데에 실패하였습니다.`);
+        }
     }
   
     else {
+      logger.info(`${title} 게시글을 수정하는 데에 실패하였습니다.`);
     return res.status(404).json();
   }
   });
@@ -242,13 +261,16 @@ router.post("/post", upload.fields([{ name: 'file' }, { name: 'image' }]), authM
   
     if (existArticle && existUser) {
         Article.destroy({ where: {title: title}});
+        logger.info(`권한 3이상의 관리자가 ${title} 게시글을 삭제하는 데에 성공하였습니다.`);
         return res.status(202).json();
     }
   
     else {
+      logger.info(`권한 3이상의 권한이 없거나 ${title} 게시글이 존재하지 않습니다..`);
     return res.status(404).json();
   }}
   catch(err){
+    logger.error(`게시글을 삭제하는 데에 실패였습니다.`);
     return res.status(400).json();
   }
   });

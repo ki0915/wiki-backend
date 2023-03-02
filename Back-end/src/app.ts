@@ -10,17 +10,11 @@ import { initializeWebsocket } from "../socket/socket";
 import session from "express-session";
 import crypto from "crypto";
 import path from "path";
-import logger from "./controller/logger";
 import expressWinston from "express-winston";
 import winston from "winston";
 
 
 const app = express();
-
-const fileTransport = new winston.transports.File({
-    filename: "logs/express.log",
-    level: 'debug'
-  });
 
 
 app.use(cors());
@@ -36,20 +30,6 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use('/uploads', express.static('uploads'));
-app.use(expressWinston.logger({
-    transports: [fileTransport],
-    format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.timestamp(),
-        winston.format.json()
-    ),
-    meta: true, // 메타 정보 출력 여부
-    msg: `HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms`, // 출력할 로그 포맷
-    expressFormat: true, // Express 기본 로그 포맷 사용 여부
-    colorize: false // 컬러 출력 여부
-}));
-
-
 
 const server = createServer(app);
 initializeWebsocket(server);
