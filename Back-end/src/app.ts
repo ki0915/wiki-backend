@@ -33,11 +33,11 @@ app.use('/uploads', express.static('uploads'));
 
 const server = createServer(app);
 initializeWebsocket(server);
-server.listen(process.env.PORT || 8080, async () => {
+server.listen(process.env.PORT || 10000, async () => {
     // //sequelize-db 연결 테스트
      await sequelize.authenticate()
      .then(async () => {
-         console.log("connection success");
+         console.log("connection successs");
      })
      .catch((e) => {
          console.log('TT : ', e);

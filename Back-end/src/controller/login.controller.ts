@@ -41,6 +41,7 @@ router.post("/", async (req, res) => {
         const existUser = await User.findOne({
         where: {
           id: id,
+          password,
         },
       });
 
