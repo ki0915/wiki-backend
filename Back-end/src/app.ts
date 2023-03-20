@@ -12,7 +12,8 @@ import crypto from "crypto";
 import path from "path";
 import expressWinston from "express-winston";
 import winston from "winston";
-
+import helmet from "helmet";
+import hpp from "hpp";
 
 const app = express();
 
@@ -27,10 +28,18 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }));
-
+app.use(helmet());
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use('/uploads', express.static('uploads'));
 
+app.use(helmet.hidePoweredBy()); // Server와 X-Poowered-By 헤더 정보 은닉
+
+
+  app.use(helmet( { contentSecurityPolicy: false } )); // helmet 모듈
+  app.use(hpp()); // hpp 모듈
+
+  
+  
 const server = createServer(app);
 initializeWebsocket(server);
 server.listen(process.env.PORT || 10000, async () => {
@@ -43,3 +52,5 @@ server.listen(process.env.PORT || 10000, async () => {
          console.log('TT : ', e);
      })
 });
+
+

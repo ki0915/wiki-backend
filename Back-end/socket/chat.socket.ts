@@ -23,3 +23,4 @@ export const receiveMessage = async (received: ReceiveMessageType) => {
     console.log(roomTitle + "로 메시지를 보냅니다.");
     namespace.to(`chats-${roomTitle}`).emit("receiveMessage", { roomTitle, senderId,  message });
 };
+
