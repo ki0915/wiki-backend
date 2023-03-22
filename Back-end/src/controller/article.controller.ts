@@ -3,13 +3,14 @@ import multer from "multer";
 import { Article } from "../../models/article";
 import { User } from "../../models/user";
 import {authMiddleware} from './verify.token';
-import { Request } from 'express';
 import { File } from "../../models/file"; 
 import { Image } from "../../models/image";
 import path from "path";
 import winston from "winston";
 
 const a = 1;
+
+//콘텐츠 길이가 큰 요청을 거부하는 것은 DoS 공격을 방지하기 위해 필요합니다. 
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -28,7 +29,10 @@ const logger = winston.createLogger({
   ]
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage,
+                       limits: {
+                        fileSize: 80000000 //업로그 크기를 80mb로 제한하였습니다. 
+  } });
 
 interface FilesObject {
   [fieldname: string]: Express.Multer.File[];

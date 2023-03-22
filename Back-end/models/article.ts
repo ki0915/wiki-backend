@@ -1,8 +1,7 @@
-import { Sequelize, 
+import {
     DataTypes, 
     Model, 
-    Optional, 
-    Association} from "sequelize";
+} from "sequelize";
 import {sequelize} from './index';	
 
 interface ArticleAttribute {

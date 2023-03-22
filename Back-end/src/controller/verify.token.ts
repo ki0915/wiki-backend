@@ -1,4 +1,4 @@
-import jwt, { VerifyErrors, VerifyOptions } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import winston from 'winston';
 

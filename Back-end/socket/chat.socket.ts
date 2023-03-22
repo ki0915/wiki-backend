@@ -1,5 +1,4 @@
-import { Op } from "sequelize";
-import { ChatEmitEvent, getSocket } from "./socket";
+import { getSocket } from "./socket";
 import { Chat } from "../models/chat";
 
 type ReceiveMessageType = {

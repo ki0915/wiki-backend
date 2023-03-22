@@ -1,8 +1,6 @@
-import { Sequelize, 
+import {
     DataTypes, 
-    Model, 
-    Optional, 
-    Association} from "sequelize";
+    Model, } from "sequelize";
 import {sequelize} from './index';	
 
 interface ChatAttribute {

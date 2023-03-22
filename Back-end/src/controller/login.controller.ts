@@ -1,8 +1,7 @@
-import express, { request, response } from "express";
+import express from "express";
 import { User } from "../../models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { channel } from "diagnostics_channel";
 import winston from "winston";
 
 const router = express.Router();

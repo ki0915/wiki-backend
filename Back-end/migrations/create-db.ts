@@ -1,4 +1,4 @@
-import { QueryInterface, Sequelize, Options } from "sequelize";
+import { Sequelize, Options } from "sequelize";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
